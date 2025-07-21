@@ -1,27 +1,28 @@
 import React from "react";
 import { Handle, Position, useReactFlow } from "reactflow";
 
-const FilterNode = ({ data, id }) => {
+const LimitNode = ({ data, id }) => {
   const { setNodes } = useReactFlow();
 
   const handleChange = (e) => {
+    const value = e.target.value;
     setNodes((nds) =>
       nds.map((node) =>
         node.id === id
-          ? { ...node, data: { ...node.data, condition: e.target.value } }
+          ? { ...node, data: { ...node.data, limit: value } }
           : node
       )
     );
   };
 
   return (
-    <div className="bg-yellow-50 border border-yellow-300 text-[10px] p-2 w-[200px] rounded shadow-sm">
-      <p className="font-bold text-yellow-800 mb-1 text-[12px]">🔍 Filter Condition</p>
+    <div className="bg-gray-50 border border-gray-300 text-[10px] p-2 w-[200px] rounded shadow-sm">
+      <p className="font-bold text-gray-700 mb-1 text-[12px]">🔽 Limit Rows</p>
       <input
-        name="condition"
-        value={data.condition}
+        name="limit"
+        value={data.limit}
         onChange={handleChange}
-        placeholder="e.g. salary > 50000"
+        placeholder="e.g. 100"
         className="w-full px-1 py-[2px] text-[10px] border border-gray-300 rounded"
       />
       <Handle type="target" position={Position.Top} />
@@ -30,4 +31,4 @@ const FilterNode = ({ data, id }) => {
   );
 };
 
-export default FilterNode;
+export default LimitNode;

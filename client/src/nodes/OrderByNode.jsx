@@ -7,18 +7,25 @@ const OrderByNode = ({ data, id }) => {
   const handleChange = (e) => {
     setNodes((nds) =>
       nds.map((node) =>
-        node.id === id ? { ...node, data: { ...node.data, order: e.target.value } } : node
+        node.id === id
+          ? { ...node, data: { ...node.data, order: e.target.value } }
+          : node
       )
     );
   };
 
   return (
-    <div className="node-block bg-purple-100 p-2 rounded w-60">
-      <label className="block text-xs font-bold mb-1">Order By</label>
-      <input name="order" value={data.order} onChange={handleChange} className="input" />
-
-      <Handle type="source" position={Position.Bottom} />
+    <div className="bg-purple-100 border border-purple-300 text-[10px] p-2 rounded w-[180px] shadow-sm">
+      <p className="text-purple-800 font-bold text-[12px] mb-1">⬇️ Order By</p>
+      <input
+        name="order"
+        value={data.order}
+        onChange={handleChange}
+        className="w-full px-1 py-[2px] text-[10px] border border-gray-300 rounded"
+        placeholder="e.g. salary DESC"
+      />
       <Handle type="target" position={Position.Top} />
+      <Handle type="source" position={Position.Bottom} />
     </div>
   );
 };
