@@ -1,4 +1,3 @@
-const { log } = require("console");
 const { callGeminiAPI } = require("../services/geminiServices");
 
 const extractJSON = (rawText) => {
@@ -20,7 +19,7 @@ const extractJSON = (rawText) => {
 };
 
 const handleGenerateSQL = async (req, res) => {
-  const { prompt } = req.body;  
+  const { prompt } = req.body;
 
   if (!prompt || typeof prompt !== "string") {
     return res.status(400).json({ error: "Invalid prompt" });
@@ -29,18 +28,19 @@ const handleGenerateSQL = async (req, res) => {
   try {
     const rawText = await callGeminiAPI(prompt);
     const parsed = extractJSON(rawText);
-   
-    if (!parsed || typeof parsed.sql !== "string" || typeof parsed.explanation !== "string") {
-  return res.status(400).json({ error: "Missing required keys (sql, explanation) in AI response" });
-}
 
-res.json({
-  sql: parsed.sql.trim(),
-  explanation: parsed.explanation.trim(),
-  suggestions: Array.isArray(parsed.suggestions)
-    ? parsed.suggestions.join("\n")
-    : (parsed.suggestions || "No suggestions provided by AI").trim(),
-});
+    if (!parsed || (!parsed.sql && !parsed.explanation)) {
+      return res.status(400).json({ error: "Missing required keys (sql, explanation) in AI response" });
+    }
+
+    return res.json({
+      sql: parsed.sql?.trim() || "",
+      explanation: parsed.explanation?.trim() || "",
+      suggestions: Array.isArray(parsed.suggestions)
+        ? parsed.suggestions.join("\n")
+        : (parsed.suggestions || "").trim(),
+      visualFlow: parsed.visualFlow || [],
+    });
 
   } catch (err) {
     console.error("Gemini API error:", err.name, err.message);
