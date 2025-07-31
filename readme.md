@@ -2,6 +2,8 @@
 
 QueryCraft is a full-stack AI-powered SQL query builder that allows users to visually design complex SQL queries using an intuitive drag-and-drop interface. It supports natural language to SQL translation, visual debugging via reverse query parsing, and learning-guided query building — all from a beautifully responsive front end built with React Flow and OpenAI's API.
 
+Version1 Hosted Link - https://querycraft.netlify.app/
+
 ---
 
 ## 🧠 Key Features
