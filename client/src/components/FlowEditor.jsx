@@ -30,17 +30,23 @@ const FlowEditor = () => {
     incrementId,
   } = useFlow();
 
+  const isMobile = window.innerWidth < 768;
+
   const onDrop = useCallback(
     (event) => {
+      if (isMobile) return;
       event.preventDefault();
       const data = event.dataTransfer.getData("application/reactflow");
       if (!data) return;
 
       const block = JSON.parse(data);
-      const position = screenToFlowPosition({
-        x: event.clientX,
-        y: event.clientY,
-      });
+      const position = screenToFlowPosition(
+        {
+          x: event.clientX,
+          y: event.clientY,
+        },
+        [screenToFlowPosition, idCounter, incrementId, setNodes]
+      );
 
       const newId = incrementId();
 
@@ -141,6 +147,16 @@ const FlowEditor = () => {
         onNodesDelete={(d) => toast.success(`${d.length} node(s) deleted`)}
         onEdgesDelete={(d) => toast.success(`${d.length} edge(s) deleted`)}
         fitView
+        //for phone screen
+        panOnScroll
+        panOnDrag
+        nodesDraggable
+        nodesConnectable
+        elementsSelectable
+        zoomOnPinch
+        zoomOnScroll
+        zoomOnDoubleClick={false}
+        selectionOnDrag
       >
         {contextMenu && (
           <ContextMenu

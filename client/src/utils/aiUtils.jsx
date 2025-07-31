@@ -131,7 +131,7 @@ ${baseResponseInstructions}
   
   try {
     // console.log("PROMPT: ",prompt);
-    const res = await fetch("http://localhost:4000/generate-sql", {
+    const res = await fetch("https://query-craft-backend.onrender.com/generate-sql", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt }),

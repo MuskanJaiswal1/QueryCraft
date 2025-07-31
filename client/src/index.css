@@ -17,4 +17,15 @@ body,
   font-size: 0.9rem;
 }
 
+.react-flow {
+  touch-action: none; /* Prevents weird zoom/scroll conflicts */
+}
+
+.react-flow__renderer {
+  -webkit-touch-callout: none; 
+  -webkit-user-select: none;  
+  user-select: none;
+}
+
+
 
